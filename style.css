@@ -16,7 +16,7 @@ body {
     max-width: 600px;
     margin: 0 auto;
     background-color: #fff;
-    min-height: 100vh;
+    min-height: auto;
     position: relative;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
@@ -27,7 +27,7 @@ body {
 .screen {
     display: none;
     width: 100%;
-    min-height: 100vh;
+    min-height: auto;
     position: relative;
     transition: all 0.3s ease;
     opacity: 0;
@@ -52,12 +52,14 @@ body {
     justify-content: center;
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     animation: fadeIn 1s ease-in-out;
+    min-height: 100vh;
 }
 
 .splash-content {
     text-align: center;
     padding: 0 20px;
     animation: slideUp 1s ease-out 0.3s both;
+    max-width: 90%;
 }
 
 .splash-content h1 {
