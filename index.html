@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国旅游景点巡礼</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 启动页 -->
+        <div id="splash-screen" class="screen active">
+            <div class="splash-content">
+                <h1>中国旅游景点巡礼</h1>
+                <p>探索中国的自然与文化瑰宝</p>
+                <button id="start-btn" class="btn-primary">开始探索</button>
+            </div>
+        </div>
+
+        <!-- 主页面 -->
+        <div id="main-screen" class="screen">
+            <header class="header">
+                <h2>热门景点</h2>
+            </header>
+            <div class="attraction-grid">
+                <div class="attraction-card" data-attraction="great-wall">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=The%20Great%20Wall%20of%20China%2C%20magnificent%20ancient%20architecture%2C%20scenic%20view&image_size=landscape_16_9" alt="长城">
+                    <h3>长城</h3>
+                    <p>中国古代伟大的防御工程</p>
+                </div>
+                <div class="attraction-card" data-attraction="forbidden-city">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Forbidden%20City%20in%20Beijing%2C%20imperial%20palace%2C%20traditional%20Chinese%20architecture&image_size=landscape_16_9" alt="故宫">
+                    <h3>故宫</h3>
+                    <p>明清两代的皇家宫殿</p>
+                </div>
+                <div class="attraction-card" data-attraction="zhangjiajie">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Zhangjiajie%20National%20Forest%20Park%2C%20unique%20sandstone%20pillars%2C%20natural%20beauty&image_size=landscape_16_9" alt="张家界">
+                    <h3>张家界</h3>
+                    <p>独特的砂岩峰林地貌</p>
+                </div>
+                <div class="attraction-card" data-attraction="west-lake">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=West%20Lake%20in%20Hangzhou%2C%20scenic%20lake%2C%20traditional%20Chinese%20garden&image_size=landscape_16_9" alt="西湖">
+                    <h3>西湖</h3>
+                    <p>人间天堂，山水秀丽</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 景点详情页 -->
+        <div id="detail-screen" class="screen">
+            <header class="header with-back">
+                <button id="back-btn" class="btn-back">←</button>
+                <h2 id="detail-title">景点详情</h2>
+            </header>
+            <div class="detail-content">
+                <div class="detail-image">
+                    <canvas id="attraction-canvas" width="600" height="200"></canvas>
+                    <img id="detail-img" src="" alt="景点图片">
+                </div>
+                <div class="detail-info">
+                    <h3 id="detail-name">景点名称</h3>
+                    <p id="detail-description">景点描述</p>
+                    <div class="detail-stats">
+                        <div class="stat-item">
+                            <span class="stat-value" id="detail-year">--</span>
+                            <span class="stat-label">历史年限</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="detail-area">--</span>
+                            <span class="stat-label">占地面积</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="detail-visitors">--</span>
+                            <span class="stat-label">年游客量</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="interaction-section">
+                    <h4>互动体验</h4>
+                    <button id="virtual-tour-btn" class="btn-secondary">虚拟游览</button>
+                    <button id="quiz-btn" class="btn-secondary">知识问答</button>
+                    <button id="route-diy-btn" class="btn-secondary">路线DIY</button>
+                    <button id="play-narration-btn" class="btn-secondary">播放解说</button>
+                    <button id="share-btn" class="btn-secondary">分享景点</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 问答页面 -->
+        <div id="quiz-screen" class="screen">
+            <header class="header with-back">
+                <button id="quiz-back-btn" class="btn-back">←</button>
+                <h2>知识问答</h2>
+            </header>
+            <div class="quiz-content">
+                <div id="quiz-question" class="quiz-question">问题将显示在这里</div>
+                <div class="quiz-options" id="quiz-options">
+                    <!-- 选项将通过JS动态生成 -->
+                </div>
+                <div id="quiz-result" class="quiz-result"></div>
+                <button id="next-question-btn" class="btn-primary">下一题</button>
+            </div>
+        </div>
+
+        <!-- 虚拟游览页面 -->
+        <div id="virtual-tour-screen" class="screen">
+            <header class="header with-back">
+                <button id="tour-back-btn" class="btn-back">←</button>
+                <h2>虚拟游览</h2>
+            </header>
+            <div class="virtual-tour-content">
+                <div class="panorama-container">
+                    <div id="panorama" class="panorama">
+                        <img id="panorama-img" src="" alt="全景图">
+                        <div class="panorama-controls">
+                            <button class="control-btn" id="pan-left">&lt;</button>
+                            <button class="control-btn" id="pan-right">&gt;</button>
+                            <button class="control-btn" id="zoom-in">+</button>
+                            <button class="control-btn" id="zoom-out">-</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tour-info">
+                    <h3 id="tour-name">景点名称</h3>
+                    <p id="tour-description">景点介绍</p>
+                    <div class="tour-hotspots">
+                        <h4>热点区域</h4>
+                        <div id="hotspots-list" class="hotspots-list">
+                            <!-- 热点区域将通过JS动态生成 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 路线DIY页面 -->
+        <div id="route-diy-screen" class="screen">
+            <header class="header with-back">
+                <button id="route-back-btn" class="btn-back">←</button>
+                <h2>路线DIY</h2>
+            </header>
+            <div class="route-diy-content">
+                <div class="map-container">
+                    <div id="map" class="map">
+                        <!-- 地图将通过JS动态生成 -->
+                        <div class="map-placeholder">
+                            <img id="route-map" src="" alt="景点地图">
+                            <div id="route-path" class="route-path"></div>
+                            <div id="map-markers" class="map-markers">
+                                <!-- 标记将通过JS动态生成 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="route-editor">
+                    <h3>路线编辑</h3>
+                    <div class="route-waypoints">
+                        <h4>途经点</h4>
+                        <div id="waypoints-list" class="waypoints-list">
+                            <!-- 途经点将通过JS动态生成 -->
+                        </div>
+                    </div>
+                    <div class="route-controls">
+                        <button id="add-waypoint-btn" class="btn-secondary">添加途经点</button>
+                        <button id="save-route-btn" class="btn-primary">保存路线</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 音频元素 -->
+    <div style="display: none;">
+        <audio id="bg-audio" loop>
+            <source src="" type="audio/mpeg">
+        </audio>
+        <audio id="narration-audio">
+            <source src="" type="audio/mpeg">
+        </audio>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

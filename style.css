@@ -1,0 +1,858 @@
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+.app-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* 屏幕切换 */
+.screen {
+    display: none;
+    width: 100%;
+    min-height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateX(20px);
+    z-index: 2;
+}
+
+.screen.active {
+    display: block;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.screen:not(.active) {
+    transform: translateX(-20px);
+}
+
+/* 启动页 */
+#splash-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    animation: fadeIn 1s ease-in-out;
+}
+
+.splash-content {
+    text-align: center;
+    padding: 0 20px;
+    animation: slideUp 1s ease-out 0.3s both;
+}
+
+.splash-content h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.splash-content p {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 2rem;
+    animation: fadeIn 1s ease-in-out 0.6s both;
+}
+
+#start-btn {
+    animation: bounce 1s ease-in-out 1s both;
+}
+
+/* 动画定义 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* 按钮样式 */
+.btn-primary {
+    background-color: #1890ff;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+    z-index: -1;
+}
+
+.btn-primary:hover {
+    background-color: #40a9ff;
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+.btn-primary:active {
+    transform: translateY(0) scale(0.95);
+}
+
+.btn-secondary {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-secondary:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-1px) scale(1.03);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary:active {
+    transform: translateY(0) scale(0.97);
+}
+
+.btn-secondary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-secondary:hover::before {
+    left: 100%;
+}
+
+.btn-back {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #333;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 头部样式 */
+.header {
+    padding: 15px 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.header.with-back {
+    justify-content: center;
+}
+
+.header h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.header .btn-back {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* 主页面 */
+.attraction-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 20px;
+}
+
+.attraction-card {
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.attraction-card:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.attraction-card:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.attraction-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s ease;
+}
+
+.attraction-card:hover::before {
+    left: 100%;
+}
+
+.attraction-card img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+}
+
+.attraction-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 10px 12px 5px;
+    color: #333;
+}
+
+.attraction-card p {
+    font-size: 0.8rem;
+    color: #666;
+    padding: 0 12px 12px;
+    line-height: 1.4;
+}
+
+/* 详情页 */
+.detail-content {
+    padding: 20px;
+}
+
+.detail-image {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.detail-image canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.detail-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    position: relative;
+    z-index: 0;
+}
+
+.detail-info h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.detail-info p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.detail-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1890ff;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.interaction-section {
+    margin-top: 20px;
+}
+
+.interaction-section h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.interaction-section .btn-secondary {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+/* 问答页面 */
+.quiz-content {
+    padding: 20px;
+}
+
+.quiz-question {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.quiz-options {
+    margin-bottom: 20px;
+}
+
+.quiz-option {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.quiz-option:hover {
+    background-color: #f0f0f0;
+    transform: translateX(5px) scale(1.02);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-option:active {
+    transform: translateX(3px) scale(0.98);
+}
+
+.quiz-option.selected {
+    background-color: #e6f7ff;
+    border-color: #1890ff;
+    box-shadow: 0 2px 8px rgba(24, 144, 255, 0.2);
+}
+
+.quiz-option.correct {
+    background-color: #f6ffed;
+    border-color: #52c41a;
+    box-shadow: 0 2px 8px rgba(82, 196, 26, 0.2);
+    animation: pulse 0.5s ease-in-out;
+}
+
+.quiz-option.incorrect {
+    background-color: #fff1f0;
+    border-color: #ff4d4f;
+    box-shadow: 0 2px 8px rgba(255, 77, 79, 0.2);
+    animation: shake 0.5s ease-in-out;
+}
+
+/* 问答选项动画 */
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+.quiz-result {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.quiz-result.correct {
+    background-color: #f6ffed;
+    color: #52c41a;
+}
+
+.quiz-result.incorrect {
+    background-color: #fff1f0;
+    color: #ff4d4f;
+}
+
+#next-question-btn {
+    margin-top: 20px;
+    width: 100%;
+}
+
+/* 虚拟游览页面 */
+.virtual-tour-content {
+    padding: 20px;
+}
+
+.panorama-container {
+    width: 100%;
+    height: 300px;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.panorama {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.panorama img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.panorama-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 25px;
+}
+
+.control-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #333;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.control-btn:hover {
+    background-color: rgba(255, 255, 255, 1);
+    transform: scale(1.1);
+}
+
+.tour-info h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.tour-info p {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.tour-hotspots h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.hotspots-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.hotspot-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.hotspot-item:hover {
+    background-color: #e6f7ff;
+    border-color: #1890ff;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 2px 8px rgba(24, 144, 255, 0.2);
+}
+
+.hotspot-item:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.hotspot-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(24, 144, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.hotspot-item:hover::before {
+    left: 100%;
+}
+
+.hotspot-item h5 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.hotspot-item p {
+    font-size: 0.8rem;
+    color: #666;
+    margin: 0;
+}
+
+/* 路线DIY页面 */
+.route-diy-content {
+    padding: 20px;
+}
+
+.map-container {
+    width: 100%;
+    height: 300px;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.map {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.map-placeholder {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.map-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.route-path {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.route-path svg {
+    width: 100%;
+    height: 100%;
+}
+
+.route-path path {
+    fill: none;
+    stroke: #1890ff;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.map-markers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.map-marker {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #ff4d4f;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    pointer-events: auto;
+    transition: all 0.3s ease;
+}
+
+.map-marker:hover {
+    transform: translate(-50%, -50%) scale(1.2);
+    box-shadow: 0 0 10px rgba(255, 77, 79, 0.5);
+}
+
+.map-marker::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px 5px 0;
+    border-style: solid;
+    border-color: #ff4d4f transparent;
+}
+
+.route-editor h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.route-waypoints h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.waypoints-list {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    min-height: 100px;
+}
+
+.waypoint-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.waypoint-item:hover {
+    border-color: #1890ff;
+    box-shadow: 0 2px 8px rgba(24, 144, 255, 0.3);
+    transform: translateX(5px);
+}
+
+.waypoint-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(24, 144, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.waypoint-item:hover::before {
+    left: 100%;
+}
+
+.waypoint-item .action-btn:hover {
+    background-color: #1890ff;
+    color: white;
+    transform: scale(1.1);
+}
+
+.waypoint-item .waypoint-name {
+    font-weight: 500;
+    color: #333;
+}
+
+.waypoint-item .waypoint-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.waypoint-item .action-btn {
+    width: 24px;
+    height: 24px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.waypoint-item .action-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.route-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.route-controls .btn-secondary {
+    flex: 1;
+}
+
+.route-controls .btn-primary {
+    flex: 2;
+}
+
+/* 响应式设计 */
+@media (max-width: 480px) {
+    .splash-content h1 {
+        font-size: 2rem;
+    }
+    
+    .attraction-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .attraction-card img {
+        height: 150px;
+    }
+    
+    .detail-image img {
+        height: 180px;
+    }
+    
+    .detail-stats {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .stat-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
