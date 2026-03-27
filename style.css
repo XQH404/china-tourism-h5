@@ -828,12 +828,28 @@ body {
 
 /* 响应式设计 */
 @media (max-width: 480px) {
+    .app-container {
+        min-height: auto;
+    }
+    
+    .screen {
+        min-height: auto;
+        padding-bottom: 20px;
+    }
+    
     .splash-content h1 {
         font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .splash-content p {
+        margin-bottom: 1.5rem;
     }
     
     .attraction-grid {
         grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 15px;
     }
     
     .attraction-card img {
@@ -853,5 +869,22 @@ body {
         display: flex;
         justify-content: space-between;
         align-items: center;
+    }
+    
+    .header {
+        padding: 10px 15px;
+    }
+    
+    .detail-content {
+        padding: 15px;
+    }
+    
+    .interaction-section {
+        margin-top: 15px;
+    }
+    
+    .interaction-section .btn-secondary {
+        margin-right: 8px;
+        margin-bottom: 8px;
     }
 }
